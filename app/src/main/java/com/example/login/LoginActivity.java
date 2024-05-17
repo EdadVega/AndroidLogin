@@ -12,6 +12,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.util.Log;
+
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
@@ -30,9 +32,18 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.editTextEmail);
         passwordEditText = findViewById(R.id.editTextPassword);
         Button loginButton = findViewById(R.id.loginButton);
+        Button registerButton = findViewById(R.id.registerButton); // Agregado el botón de registro
 
         // Listener de botón de inicio de sesión
         loginButton.setOnClickListener(v -> signIn());
+
+        // Listener de botón de registro
+        registerButton.setOnClickListener(v -> {
+            // Configurar el intent para dirigir al usuario a la nueva vista de registro
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class); // Reemplaza "NuevaVistaRegistroActivity" con el nombre de tu actividad de registro
+            startActivity(intent);
+        });
+        Log.d("LoginActivity", "La actividad LoginActivity se ha creado correctamente.");
     }
 
     private void signIn() {
@@ -66,8 +77,9 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     } else {
                         // Error al iniciar sesión
-                        Toast.makeText(LoginActivity.this, "Error al iniciar sesión: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Error al iniciar sesión, credenciales invalidas.", Toast.LENGTH_SHORT).show();
                     }
                 });
+        Log.d("LoginActivity", "Iniciando sesión con email: " + email);
     }
 }
