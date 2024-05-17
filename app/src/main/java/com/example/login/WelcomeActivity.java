@@ -19,7 +19,7 @@ public class WelcomeActivity extends AppCompatActivity {
         // instancia
         auth = FirebaseAuth.getInstance();
 
-        Button logoutButton = findViewById(R.id.logoutButton); // Corregido el ID del botón de cierre de sesión
+        Button logoutButton = findViewById(R.id.logoutButton);
 
         logoutButton.setOnClickListener(v -> {
             auth.signOut();

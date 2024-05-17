@@ -49,19 +49,18 @@ public class RegisterActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)) {
                 Toast.makeText(RegisterActivity.this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
             } else {
-                // Crear un nuevo usuario con el correo electrónico y la contraseña
+                // Crear usuario
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                // Usuario registrado correctamente
+                                // Reginstro exitoso
                                 FirebaseUser user = auth.getCurrentUser();
                                 if (user != null) {
-                                    // Guardar los datos del usuario en la colección "users" de Firestore
+                                    // Guardar los datos en colección
                                     Map<String, Object> userData = new HashMap<>();
                                     userData.put("name", name);
                                     userData.put("email", email);
                                     userData.put("phone", phone);
-                                    // Agregar más datos del usuario si es necesario
 
                                     db.collection("users").document(user.getUid())
                                             .set(userData)
@@ -69,20 +68,19 @@ public class RegisterActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        // Datos del usuario guardados en Firestore
-                                                        // Redirigir a la vista de bienvenida u otra actividad
+                                                        // Datos guardados Firestore y redirección a welcome
                                                         Intent intent = new Intent(RegisterActivity.this, WelcomeActivity.class);
                                                         startActivity(intent);
                                                         finish();
                                                     } else {
-                                                        // Error al guardar datos del usuario
+                                                        // Error al guardar datos
                                                         Toast.makeText(RegisterActivity.this, "Error al guardar datos del usuario", Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
                                             });
                                 }
                             } else {
-                                // Error al registrar al usuario
+                                // Error al registrar
                                 Toast.makeText(RegisterActivity.this, "Error al registrar al usuario", Toast.LENGTH_SHORT).show();
                             }
                         });
