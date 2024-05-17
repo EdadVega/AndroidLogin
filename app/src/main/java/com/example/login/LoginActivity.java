@@ -1,15 +1,16 @@
 package com.example.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,22 +31,43 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.editTextPassword);
         Button loginButton = findViewById(R.id.loginButton);
 
-        // listener de botón inicio
-        loginButton.setOnClickListener(v -> {
-            String email = emailEditText.getText().toString();
-            String password = passwordEditText.getText().toString();
+        // Listener de botón de inicio de sesión
+        loginButton.setOnClickListener(v -> signIn());
+    }
 
-            // Inicia autenticación FB
-            auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            // msg: Inicio de sesión
-                            Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // msg: Error
-                            Toast.makeText(LoginActivity.this, "Error al iniciar sesión. Verifica tus credenciales.", Toast.LENGTH_SHORT).show();
+    private void signIn() {
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Inicio de sesión exitoso
+                        FirebaseUser user = auth.getCurrentUser();
+                        if (user != null) {
+                            // Crear un nuevo documento para el usuario en Cloud Firestore
+                            Map<String, Object> userData = new HashMap<>();
+                            userData.put("email", user.getEmail());
+                            // Agrega más datos del usuario si los tienes
+
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection("users").document(user.getUid())
+                                    .set(userData)
+                                    .addOnSuccessListener(aVoid -> {
+                                        // Datos del usuario guardados en Firestore
+                                        // Redirigir a la vista de bienvenida
+                                        Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                                        startActivity(intent);
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        // Error al guardar datos del usuario
+                                        Toast.makeText(LoginActivity.this, "Error al guardar datos del usuario: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
                         }
-                    });
-        });
+                    } else {
+                        // Error al iniciar sesión
+                        Toast.makeText(LoginActivity.this, "Error al iniciar sesión: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

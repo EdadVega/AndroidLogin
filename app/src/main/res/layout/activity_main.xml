@@ -5,7 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo"
     tools:context=".MainActivity">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,6 +23,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
+            android:layout_marginTop="30dp"
             android:adjustViewBounds="true"
             android:cropToPadding="true"
             android:src="@drawable/login1" />
@@ -32,6 +35,7 @@
             android:layout_marginTop="20dp"
             android:text="Bienvenido"
             android:textSize="30sp"
+            android:textColor="#FFF"
             android:textStyle="bold" />
 
         <TextView
@@ -42,17 +46,20 @@
             android:layout_marginBottom="10dp"
             android:text="Inicie sesión"
             android:textSize="24sp"
+            android:textColor="#FFF"
             android:textStyle="normal" />
 
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="354dp"
             android:layout_height="71dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
-            android:textSize="20sp"
             android:hint="Correo electrónico"
             android:inputType="textEmailAddress"
-            android:layout_gravity="center_horizontal" />
+            android:textColor="#FFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/editTextPassword"
@@ -62,14 +69,24 @@
             android:textSize="20sp"
             android:hint="Contraseña"
             android:inputType="textPassword"
-            android:layout_gravity="center_horizontal" />/>
-
+            android:textColor="#FFF"
+            android:textColorHint="#FFFFFF"
+            android:layout_gravity="center_horizontal" />
         <Button
             android:id="@+id/loginButton"
             android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_marginBottom="10dp"
             android:text="Iniciar sesión"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal" />
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:text="Registrar"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal" />/>
