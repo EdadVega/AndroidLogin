@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                // Reginstro exitoso
+                                // Registro exitoso
                                 FirebaseUser user = auth.getCurrentUser();
                                 if (user != null) {
                                     // Guardar los datos en colección
@@ -85,6 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         });
             }
-        });
+        }); 
     }
 }
