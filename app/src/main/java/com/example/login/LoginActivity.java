@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                                     .set(userData)
                                     .addOnSuccessListener(aVoid -> {
                                         // Datos en Firestore y redirección a welcome
-                                        Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                                        Intent intent = new Intent(LoginActivity.this, WeatherActivity.class);
                                         startActivity(intent);
                                     })
                                     .addOnFailureListener(e -> {

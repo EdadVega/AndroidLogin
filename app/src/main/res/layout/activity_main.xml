@@ -26,7 +26,7 @@
             android:layout_marginTop="30dp"
             android:adjustViewBounds="true"
             android:cropToPadding="true"
-            android:src="@drawable/login1" />
+            android:src="@drawable/heat" />
 
         <TextView
             android:layout_width="wrap_content"
